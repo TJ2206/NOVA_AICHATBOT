@@ -95,7 +95,9 @@ app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
 });
 
 app.get("/api/userchats", ClerkExpressRequireAuth(), async (req, res) => {
+  console.log("Here");
   const userId = req.auth.userId || req.headers['user-id'];
+  console.log(userId);
 
   try {
     const userChats = await UserChats.find({ userId });
@@ -151,7 +153,9 @@ app.put("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
 });
 
 app.use((err, req, res, next) => {
+  console.log(req);
   console.log(err);
+  console.log(res);
   res.status(401).send("Unauthenticated!");
 });
 
