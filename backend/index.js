@@ -95,16 +95,16 @@ app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
 });
 
 app.get("/api/userchats", ClerkExpressRequireAuth(), async (req, res) => {
-  console.log("Here");
+  console.log("Fetching user chats...");
   const userId = req.auth.userId || req.headers['user-id'];
-  console.log(userId);
+  console.log("User ID:", userId);
 
   try {
     const userChats = await UserChats.find({ userId });
-
+    console.log("User Chats:", userChats);
     res.status(200).send(userChats[0].chats);
   } catch (err) {
-    console.log(err);
+    console.error("Error fetching user chats:", err);
     res.status(500).send("Error fetching userchats!");
   }
 });
@@ -153,15 +153,12 @@ app.put("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(401).send("Unauthenticated!");
-});
-
-// PRODUCTION
-app.use(express.static(path.join(__dirname, "../frontend")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend", "index.html"));
+  console.error(err);
+  if (err.status) {
+    res.status(err.status).send(err.message || "Error");
+  } else {
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.listen(port, () => {
