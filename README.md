@@ -27,7 +27,7 @@ Nova AI Chatbot is a dynamic AI-powered chatbot application designed for real-ti
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/sriyareddy23/nova-ai-chatbot.git
+git clone https://github.com/TJ2206/NOVA_AICHATBOT.git
 cd nova-ai-chatbot
 ```
 
